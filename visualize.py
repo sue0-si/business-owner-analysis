@@ -77,18 +77,23 @@ print("Columns:", dfRegionJobSum.columns)
 
 
 filteredSp = dfRegionSp[dfRegionSp['시도'].isin([regionOption])]
-filteredSp
+filteredTown = filteredSp['시군구'].unique()
 
-filteredJob = filteredSp['시군구'].unique()
-
-regionSp = st.radio(
-    "시군구를 선택해주세요",
-    filteredJob
+st.markdown(
+    "<style>div.row-widget.stRadio > div{flex-direction:row;}</style>",
+    unsafe_allow_html=True,
 )
 
-example = filteredSp['업종'].isin([regionSp])
-example
+# regionSp = 선택한 시군구 값
+regionSp = st.radio(
+    "시군구를 선택해주세요",
+    filteredTown
+)
 
-# job_fig = px.bar(filteredSp['시군구'].isin([regionSp]), x='업종', y='당월')
+example = filteredSp[filteredSp['시군구'].isin([regionSp])]
+
+town_fig = px.scatter(example, x='업종', y='당월', size="당월", color='당월')
+town_fig
+
 
 
