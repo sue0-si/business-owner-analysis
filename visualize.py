@@ -75,7 +75,6 @@ print("Index:", dfRegionJobSum.index)
 print("Columns:", dfRegionJobSum.columns)
 
 
-
 filteredSp = dfRegionSp[dfRegionSp['시도'].isin([regionOption])]
 filteredTown = filteredSp['시군구'].unique()
 
@@ -92,8 +91,6 @@ regionSp = st.radio(
 
 example = filteredSp[filteredSp['시군구'].isin([regionSp])]
 
-town_fig = px.scatter(example, x='업종', y='당월', size="당월", color='당월')
-town_fig
-
-
+district_fig = px.scatter(example, x='업종', y='당월', size="당월", color='당월')
+st.plotly_chart(district_fig)
 
