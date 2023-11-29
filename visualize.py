@@ -18,12 +18,11 @@ dfMerged["choose"] = False  # 컬럼 추가
 dfRegion = pd.read_csv("region.csv")
 
 
-st.title("전국 인기 사업장 30개")
+st.header("전국 인기 사업장 30개 분석 및 지역별 인기 업종")
 
 col1, col2 = st.columns([0.5,0.5])
 
 with col1:
-    st.header("당월")
     current = st.data_editor(dfMerged)
     current["업종"] = current.index
     select = list(current[current["choose"]]["업종"])
@@ -65,7 +64,7 @@ regionOption = st.selectbox (
 
 strem = dfRegionJobSum[dfRegionJobSum['시도'].isin([regionOption])]
 cell_value = str(strem['당월'].iloc[0])
-st.subheader("도내 사업장 총합: " + cell_value)
+st.subheader("시/도내 사업장 총합: " + cell_value)
 
 filtered = dfRegionSpecific[dfRegionSpecific['시도'].isin([regionOption])]
 town_fig = px.scatter(filtered, x='시군구', y='당월', size="당월", color= "당월")
