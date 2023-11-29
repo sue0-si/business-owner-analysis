@@ -75,4 +75,20 @@ print("Index:", dfRegionJobSum.index)
 print("Columns:", dfRegionJobSum.columns)
 
 
-dfRegionSp
+
+filteredSp = dfRegionSp[dfRegionSp['시도'].isin([regionOption])]
+filteredSp
+
+filteredJob = filteredSp['시군구'].unique()
+
+regionSp = st.radio(
+    "시군구를 선택해주세요",
+    filteredJob
+)
+
+example = filteredSp['업종'].isin([regionSp])
+example
+
+# job_fig = px.bar(filteredSp['시군구'].isin([regionSp]), x='업종', y='당월')
+
+
