@@ -13,24 +13,25 @@ def bar_chart(*geo):
 
 dfMerged = pd.read_csv("merged.csv")
 dfMerged.set_index('업종', inplace=True)
-dfMerged["choose"] = False  # 컬럼 추가
+dfMerged["선택"] = False  # 컬럼 추가
 
 dfRegion = pd.read_csv("region.csv")
 
-
 st.header("전국 인기 사업장 30개 분석 및 지역별 인기 업종")
 
+# col1 = 전처리된 데이터프레임에 유저가 선택할 수 있는 기능 넣기
 col1, col2 = st.columns([0.5,0.5])
-
-with col1:
+with col1:  
     current = st.data_editor(dfMerged)
     current["업종"] = current.index
-    select = list(current[current["choose"]]["업종"])
-    current["choose"] = current["업종"].isin(select)
+    select = list(current[current["선택"]]["업종"])
+    current["선택"] = current["업종"].isin(select)
 
+# col2: 사업장 증감도와 사업자 분포도
 with col2:
     tab1, tab2 = st.tabs(["사업장 증감도", "사업자 분포도"])
 
+    # 사업장 증감도
     with tab1:
         list = []
         for index, row in current.iterrows():
@@ -39,9 +40,9 @@ with col2:
         
         difference_df = pd.DataFrame(list)
         filtered_df = difference_df[difference_df['업종'].isin(select)]
-
         st.plotly_chart(bar_chart(*select))
-        
+    
+    # 사업자 분포도    
     with tab2:
         filtered_region = dfRegion[dfRegion['업종'].isin(select)]
 
@@ -56,27 +57,27 @@ dfRegionJobSum = pd.read_csv("business_sum_region.csv")
 dfRegionSp = pd.read_csv("business_sum_by_region.csv")
 
 
-# regionOption: 선택한 값
+# regionOption: 선택한 시/도 값
 regionOption = st.selectbox (
-    'Choose a region',
+    '시/도를 선택하세요',
     dfRegionSpecific['시도'].unique()
 )
 
+# 선택한 시/도의 총 사업장 수 나타내기
 strem = dfRegionJobSum[dfRegionJobSum['시도'].isin([regionOption])]
 cell_value = str(strem['당월'].iloc[0])
 st.subheader("시/도내 사업장 총합: " + cell_value)
 
+# 선택한 시/도의 시군구 별 사업장 수 그래프 그리기
 filtered = dfRegionSpecific[dfRegionSpecific['시도'].isin([regionOption])]
 town_fig = px.scatter(filtered, x='시군구', y='당월', size="당월", color= "당월")
 st.plotly_chart(town_fig)
 
-print("Index:", dfRegionJobSum.index)
-print("Columns:", dfRegionJobSum.columns)
-
-
+# 선택한 시/도에 대한 데이터만 추출
 filteredSp = dfRegionSp[dfRegionSp['시도'].isin([regionOption])]
 filteredTown = filteredSp['시군구'].unique()
 
+# 라디오 버튼을 가로로 정렬
 st.markdown(
     "<style>div.row-widget.stRadio > div{flex-direction:row;}</style>",
     unsafe_allow_html=True,
@@ -90,6 +91,7 @@ regionSp = st.radio(
 
 example = filteredSp[filteredSp['시군구'].isin([regionSp])]
 
+# 선택한 시군구에 대한 업종별 사업장 수 그래프 그리기
 district_fig = px.scatter(example, x='업종', y='당월', size="당월", color='당월')
 st.plotly_chart(district_fig)
 
