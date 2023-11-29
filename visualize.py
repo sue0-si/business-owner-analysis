@@ -17,7 +17,7 @@ dfMerged["선택"] = False  # 컬럼 추가
 
 dfRegion = pd.read_csv("region.csv")
 
-st.header("전국 인기 업종 30개 분석 및 지역별 업종 분포")
+st.header("2023년 전국 인기 업종 30개 분석 및 지역별 업종 분포")
 
 # col1 = 전처리된 데이터프레임에 유저가 선택할 수 있는 기능 넣기
 col1, col2 = st.columns([0.5,0.5])
