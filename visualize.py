@@ -5,9 +5,9 @@ import plotly.express as px
 @st.cache_data
 def bar_chart(*geo):
     fig = px.bar(filtered_df,
-                title="전국 인기 사업장 증감 추이",
+                title="전국 인기 사업자 증감 추이",
                 x="업종",
-                y="사업장 차이",
+                y="사업자 차이",
                 color="업종")
     return fig
 
@@ -17,7 +17,7 @@ dfMerged["선택"] = False  # 컬럼 추가
 
 dfRegion = pd.read_csv("region.csv")
 
-st.header("전국 인기 사업장 30개 분석 및 지역별 인기 업종")
+st.header("전국 인기 업종 30개 분석 및 지역별 업종 분포")
 
 # col1 = 전처리된 데이터프레임에 유저가 선택할 수 있는 기능 넣기
 col1, col2 = st.columns([0.5,0.5])
@@ -29,14 +29,14 @@ with col1:
 
 # col2: 사업장 증감도와 사업자 분포도
 with col2:
-    tab1, tab2 = st.tabs(["사업장 증감도", "사업자 분포도"])
+    tab1, tab2 = st.tabs(["사업자 증감도", "사업자 분포도"])
 
     # 사업장 증감도
     with tab1:
         list = []
         for index, row in current.iterrows():
             diff = row['당월'] - row['전년동월']
-            list.append({'업종': row['업종'], '사업장 차이': diff})
+            list.append({'업종': row['업종'], '사업자 차이': diff})
         
         difference_df = pd.DataFrame(list)
         filtered_df = difference_df[difference_df['업종'].isin(select)]
@@ -66,7 +66,7 @@ regionOption = st.selectbox (
 # 선택한 시/도의 총 사업장 수 나타내기
 strem = dfRegionJobSum[dfRegionJobSum['시도'].isin([regionOption])]
 cell_value = str(strem['당월'].iloc[0])
-st.subheader("시/도내 사업장 총합: " + cell_value)
+st.subheader("시/도내 사업자 총합: " + cell_value)
 
 # 선택한 시/도의 시군구 별 사업장 수 그래프 그리기
 filtered = dfRegionSpecific[dfRegionSpecific['시도'].isin([regionOption])]
