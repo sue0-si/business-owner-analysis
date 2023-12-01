@@ -2,15 +2,6 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-# 페이지의 margin을 조절하기 위한 CSS 스타일
-custom_css = """
-    <style>
-        body {
-            margin: 0px 20px;
-        }
-    </style>
-"""
-
 @st.cache_data
 def bar_chart(*geo):
     fig = px.bar(filtered_df,
