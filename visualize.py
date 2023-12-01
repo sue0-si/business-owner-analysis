@@ -6,7 +6,7 @@ import plotly.express as px
 custom_css = """
     <style>
         body {
-            margin: 20px;
+            margin: 20px 0px;
         }
     </style>
 """
