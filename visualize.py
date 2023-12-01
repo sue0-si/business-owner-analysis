@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
+# 사업자 증감 막대 그래프
 @st.cache_data
 def bar_chart(*geo):
     fig = px.bar(filtered_df,
@@ -11,6 +12,7 @@ def bar_chart(*geo):
                 color="업종")
     return fig
 
+# 데이터 파일 읽어오기
 dfMerged = pd.read_csv("merged.csv")
 dfMerged.set_index('업종', inplace=True)
 dfMerged["선택"] = False  # 컬럼 추가
@@ -51,7 +53,7 @@ with col2:
                 labels={'당월': '사업자 수', '시도': '지역', '업종': '업종'})
         st.plotly_chart(fig)
 
-
+# 데이터 파일 읽어오기
 dfRegionSpecific = pd.read_csv("business_sum_region_specific.csv")
 dfRegionJobSum = pd.read_csv("business_sum_region.csv")
 dfRegionSp = pd.read_csv("business_sum_by_region.csv")
