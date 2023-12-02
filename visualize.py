@@ -6,7 +6,7 @@ import plotly.express as px
 @st.cache_data
 def bar_chart(*geo):
     fig = px.bar(filtered_df,
-                title="사업자 증감 추이",
+                
                 x="업종",
                 y="사업자 차이",
                 color="업종")
