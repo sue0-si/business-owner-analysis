@@ -19,7 +19,7 @@ dfMerged["선택"] = False  # 컬럼 추가
 
 dfRegion = pd.read_csv("region.csv")
 
-st.header("2023년 전국 인기 업종 30개 분석 및 지역별 업종 분포")
+st.header("2023년 전국 주요 생활업종 30개 분석 및 지역별 업종 분포")
 
 # col1 = 전처리된 데이터프레임에 유저가 선택할 수 있는 기능 넣기
 col1, col2 = st.columns([0.5,0.5])
@@ -49,7 +49,7 @@ with col2:
         filtered_region = dfRegion[dfRegion['업종'].isin(select)]
 
         fig = px.scatter(filtered_region, x='시도', y='당월', color='업종', size='당월',
-                title='인기 업종에 대한 전국 사업자 분포도',
+                title='업종별 전국 사업자 분포도',
                 labels={'당월': '사업자 수', '시도': '지역', '업종': '업종'})
         st.plotly_chart(fig)
 
